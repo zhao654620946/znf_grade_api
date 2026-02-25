@@ -1,0 +1,43 @@
+name: run python script
+
+on:
+  schedule:
+    - cron: "*/10 * * * *" 
+  workflow_dispatch:        # 允许手动运行
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt || true
+
+      - name: Run grade_scheduler.py
+        env:
+          ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
+          BASE_URL: ${{ secrets.BASE_URL }}
+          SID: ${{ secrets.SID }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          XNM: ${{ secrets.XNM }}
+          XQM: ${{ secrets.XQM }}
+          PUSH_URL: ${{ secrets.PUSH_URL }}
+        run: |
+          python grade_scheduler.py
+          
+      - name: Commit data.txt
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add data.txt
+          git commit -m "update data.txt" || echo "no changes"
+          git push
