@@ -68,7 +68,7 @@ def main():
     if current_result is not None:  # 确保运行结果有效
         if last_result is None:
             print("首次运行，结果为：")
-            print(datetime.now().strftime("%Y-%m-%d %H:%M:%S")+"\n"+current_result)
+            # print(datetime.now().strftime("%Y-%m-%d %H:%M:%S")+"\n"+current_result)
             payload = {
                 "title": "首次查询",  # 消息标题
                 "content": datetime.now().strftime("%Y-%m-%d %H:%M:%S")+"\n"+current_result,
@@ -76,7 +76,7 @@ def main():
             send_push_notification(PUSH_URL, payload)
         elif current_result != last_result:
             print("运行结果发生变化，新的结果为：")
-            print(datetime.now().strftime("%Y-%m-%d %H:%M:%S")+"\n"+current_result)
+            # print(datetime.now().strftime("%Y-%m-%d %H:%M:%S")+"\n"+current_result)
             payload = {
                 "title": "成绩更新",  # 消息标题
                 "content": datetime.now().strftime("%Y-%m-%d %H:%M:%S")+"\n"+current_result,
@@ -84,7 +84,7 @@ def main():
             send_push_notification(PUSH_URL, payload)
         else:
             print("运行结果相同，无变化。结果为：")
-            print(datetime.now().strftime("%Y-%m-%d %H:%M:%S")+"\n"+current_result)
+            # print(datetime.now().strftime("%Y-%m-%d %H:%M:%S")+"\n"+current_result)
 
         # 等待 5 分钟
         encrypted_data = cipher.encrypt(current_result.encode())
