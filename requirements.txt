@@ -3,3 +3,4 @@ requests==2.27.1
 rsa==4.8
 cryptography==46.0.3
 pandas==2.3.3
+xlrd
